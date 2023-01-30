@@ -1,0 +1,60 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="myFormSelect" class="my-3">
+    <div class="form-row">
+        <div class="col-md-6 form-group">
+            <label for="fn">First Name</label>
+            <input type="text" class="form-control" id="fn" formControlName="fName">
+            <span *ngIf="myFormSelect.get('fName').invalid && myFormSelect.get('fName').touched"
+                class="text-danger">First name is required</span>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="ln">Last Name</label>
+            <input type="text" class="form-control" id="ln" formControlName="lName">
+            <span *ngIf="myFormSelect.get('lName').invalid && myFormSelect.get('lName').touched"
+                class="text-danger">Last name is required</span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 form-group">
+            <div>
+                <label for="dr">How should we contact you?</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" name="selectRadio" id="phone" value="phone" class="form-check-input"
+                    (click)="onChange($event)">
+                <label for="phone" class="form-check-label">Phone</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" name="selectRadio" id="email" value="email" class="form-check-input"
+                    (click)="onChange($event)">
+                <label for="email" class="form-check-label">Email</label>
+            </div>
+        </div>
+        <div class="col-md-6 form-group" *ngIf="selectedOptionPhone">
+            <label for="pn">Phone Number</label>
+            <input type="text" class="form-control" id="pn" formControlName="phone">
+            <small *ngIf="myFormSelect.get('phone').invalid && myFormSelect.get('phone').touched" class="text-danger">
+                <span *ngIf="myFormSelect.get('phone')?.errors?.['required']">Phone number is required</span>
+                <span *ngIf="myFormSelect.get('phone')?.errors?.['pattern']">Enter valid phone number</span>
+                <span
+                    *ngIf="myFormSelect.get('phone')?.errors?.['minlength'] && !myFormSelect.get('phone')?.errors?.['pattern']">The
+                    phone number has to be at least 10 digit long, put
+                    {{myFormSelect.get('phone')?.errors?.['minlength'].requiredLength -
+                    myFormSelect.get('phone')?.errors?.['minlength'].actualLength}} more numbers</span>
+            </small>
+        </div>
+        <div class="col-md-6 form-group" *ngIf="selectedOptionEmail">
+            <label for="em">Email</label>
+            <input type="email" class="form-control" id="em" formControlName="email">
+            <small *ngIf="myFormSelect.get('email').invalid && myFormSelect.get('email').touched" class="text-danger">
+                <span *ngIf="myFormSelect.get('email')?.errors?.['required']">Email is required</span>
+                <span *ngIf="myFormSelect.get('email')?.errors?.['email']">Enter valid email-id</span>
+            </small>
+        </div>
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12 text-right">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</form>
